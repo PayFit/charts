@@ -7,7 +7,7 @@ Shared template for nsqadmin chart
 Expand the name of the chart.
 */}}
 {{- define "nsqadmin.name" -}}
-{{- default .Chart.Name .Values.nsqadmin.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.global.nsqadmin.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -16,10 +16,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "nsqadmin.fullname" -}}
-{{- if .Values.nsqadmin.fullnameOverride }}
-{{- .Values.nsqadmin.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.global.nsqadmin.fullnameOverride }}
+{{- .Values.global.nsqadmin.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nsqadmin.nameOverride }}
+{{- $name := default .Chart.Name .Values.global.nsqadmin.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -59,10 +59,10 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "nsqadmin.serviceAccountName" -}}
-{{- if .Values.nsqadmin.serviceAccount.create }}
-{{- default (include "nsqadmin.fullname" .) .Values.nsqadmin.serviceAccount.name }}
+{{- if .Values.global.nsqadmin.serviceAccount.create }}
+{{- default (include "nsqadmin.fullname" .) .Values.global.nsqadmin.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.nsqadmin.serviceAccount.name }}
+{{- default "default" .Values.global.nsqadmin.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
@@ -76,7 +76,7 @@ Shared template for nsqd chart
 Expand the name of the chart.
 */}}
 {{- define "nsqd.name" -}}
-{{- default .Chart.Name .Values.nsqd.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.global.nsqd.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -85,10 +85,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "nsqd.fullname" -}}
-{{- if .Values.nsqd.fullnameOverride }}
-{{- .Values.nsqd.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.global.nsqd.fullnameOverride }}
+{{- .Values.global.nsqd.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nsqd.nameOverride }}
+{{- $name := default .Chart.Name .Values.global.nsqd.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -128,10 +128,10 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "nsqd.serviceAccountName" -}}
-{{- if .Values.nsqd.serviceAccount.create }}
-{{- default (include "nsqd.fullname" .) .Values.nsqd.serviceAccount.name }}
+{{- if .Values.global.nsqd.serviceAccount.create }}
+{{- default (include "nsqd.fullname" .) .Values.global.nsqd.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.nsqd.serviceAccount.name }}
+{{- default "default" .Values.global.nsqd.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
@@ -145,7 +145,7 @@ Shared template for nsqlookupd chart
 Expand the name of the chart.
 */}}
 {{- define "nsqlookupd.name" -}}
-{{- default .Chart.Name .Values.nsqlookupd.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.global.nsqlookupd.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -154,10 +154,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "nsqlookupd.fullname" -}}
-{{- if .Values.nsqlookupd.fullnameOverride }}
-{{- .Values.nsqlookupd.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.global.nsqlookupd.fullnameOverride }}
+{{- .Values.global.nsqlookupd.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nsqlookupd.nameOverride }}
+{{- $name := default .Chart.Name .Values.global.nsqlookupd.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -197,9 +197,9 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "nsqlookupd.serviceAccountName" -}}
-{{- if .Values.nsqlookupd.serviceAccount.create }}
-{{- default (include "nsqlookupd.fullname" .) .Values.nsqlookupd.serviceAccount.name }}
+{{- if .Values.global.nsqlookupd.serviceAccount.create }}
+{{- default (include "nsqlookupd.fullname" .) .Values.global.nsqlookupd.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.nsqlookupd.serviceAccount.name }}
+{{- default "default" .Values.global.nsqlookupd.serviceAccount.name }}
 {{- end }}
 {{- end }}
