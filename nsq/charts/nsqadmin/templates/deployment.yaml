@@ -24,7 +24,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-{{- if .Values.nsqadmin.priorityClassName }}
+{{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
 {{- end }}
       serviceAccountName: {{ include "nsqadmin.serviceAccountName" . }}
@@ -39,10 +39,10 @@ spec:
           command:
             - /nsqadmin
           args:
-            {{ $lookupdFullName := include "nsqlookupd.fullname" . -}}
-            {{ range $i, $e := until (atoi (toStrings .Values.global.nsqlookupdReplicaCount | first)) -}}
-            - --lookupd-http-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4161
-            {{ end -}}
+            - --config=/etc/nsq/nsq-admin.cfg
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nsq
           ports:
             - name: http
               containerPort: 4171
@@ -57,6 +57,10 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: nsq
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
