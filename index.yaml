@@ -3,6 +3,16 @@ entries:
   registry-creds:
   - apiVersion: v2
     appVersion: 0.2.5
+    created: "2020-12-01T15:16:18.424242516Z"
+    description: A Helm chart alexellis/registry-creds
+    digest: 5a9986907acded1b9b2da9c8ddd271869725cf2674bc9a51a17f15c8a1345e97
+    name: registry-creds
+    type: application
+    urls:
+    - https://github.com/PayFit/charts/releases/download/registry-creds-0.1.1/registry-creds-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.2.5
     created: "2020-11-30T16:51:21.066575719Z"
     description: A Helm chart alexellis/registry-creds
     digest: 65435e327c5ac6f344125e59fdfbb415d0fa353078a4f2da2a782c249bcadff4
