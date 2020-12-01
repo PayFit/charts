@@ -125,8 +125,8 @@ roleRef:
   name: registry-creds-leader-election-role
 subjects:
 - kind: ServiceAccount
-  name: default
-  namespace: registry-creds-system
+  name: {{ include "registry-creds.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -138,5 +138,5 @@ roleRef:
   name: registry-creds-registry-creds-role
 subjects:
 - kind: ServiceAccount
-  name: default
-  namespace: registry-creds-system
+  name: {{ include "registry-creds.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
