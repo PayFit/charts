@@ -3,7 +3,7 @@ name: nsqadmin
 description: NSQ Admin chart
 type: application
 version: 0.0.1
-appVersion: 1.1.0
+appVersion: v1.2.0
 keywords:
   - "NSQ"
   - "NSQ Admin"

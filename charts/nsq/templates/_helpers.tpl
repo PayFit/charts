@@ -1,8 +1,7 @@
+{{/* vim: set filetype=mustache: */}}
 {{/*
 Shared template for nsqadmin chart
 */}}
-
-{{/* vim: set filetype=mustache: */}}
 {{/*
 Expand the name of the chart.
 */}}
@@ -70,8 +69,6 @@ Create the name of the service account to use
 {{/*
 Shared template for nsqd chart
 */}}
-
-{{/* vim: set filetype=mustache: */}}
 {{/*
 Expand the name of the chart.
 */}}
@@ -140,7 +137,6 @@ Create the name of the service account to use
 Shared template for nsqlookupd chart
 */}}
 
-{{/* vim: set filetype=mustache: */}}
 {{/*
 Expand the name of the chart.
 */}}

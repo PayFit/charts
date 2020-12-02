@@ -80,3 +80,4 @@ affinity: {}
 
 persistence:
   enabled: true
+  mountPath: "/data"

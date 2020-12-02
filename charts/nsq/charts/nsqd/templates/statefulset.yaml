@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "nsqd.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "nsqd.fullname" . }}
   replicas: {{ .Values.replicaCount }}
   podManagementPolicy: Parallel
   selector:

@@ -4,18 +4,18 @@
 
 global:
   nsqadmin:
-    nameOverride: ""
-    fullnameOverride: ""
+    nameOverride: "nsqadmin"
+    fullnameOverride: "nsqadmin"
     serviceAccount:
       create: true
   nsqd:
-    nameOverride: ""
-    fullnameOverride: ""
+    nameOverride: "nsqd"
+    fullnameOverride: "nsqd"
     serviceAccount:
       create: true
   nsqlookupd:
-    nameOverride: ""
-    fullnameOverride: ""
+    nameOverride: "nsqlookupd"
+    fullnameOverride: "nsqlookupd"
     serviceAccount:
       create: true
 
@@ -25,4 +25,3 @@ nsqd:
   replicaCount: 3
 nsqlookupd:
   replicaCount: 3
-
