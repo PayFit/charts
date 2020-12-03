@@ -6,7 +6,7 @@ Shared template for nsqadmin chart
 Expand the name of the chart.
 */}}
 {{- define "nsqadmin.name" -}}
-{{- default .Chart.Name .Values.global.nsqadmin.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default "nsqadmin" .Values.global.nsqadmin.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -18,7 +18,7 @@ If release name contains chart name it will be used as a full name.
 {{- if .Values.global.nsqadmin.fullnameOverride }}
 {{- .Values.global.nsqadmin.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.global.nsqadmin.nameOverride }}
+{{- $name := default "nsqadmin" .Values.global.nsqadmin.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -73,7 +73,7 @@ Shared template for nsqd chart
 Expand the name of the chart.
 */}}
 {{- define "nsqd.name" -}}
-{{- default .Chart.Name .Values.global.nsqd.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default "nsqd" .Values.global.nsqd.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -85,7 +85,7 @@ If release name contains chart name it will be used as a full name.
 {{- if .Values.global.nsqd.fullnameOverride }}
 {{- .Values.global.nsqd.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.global.nsqd.nameOverride }}
+{{- $name := default "nsqd" .Values.global.nsqd.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -141,7 +141,7 @@ Shared template for nsqlookupd chart
 Expand the name of the chart.
 */}}
 {{- define "nsqlookupd.name" -}}
-{{- default .Chart.Name .Values.global.nsqlookupd.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default "nsqlookupd" .Values.global.nsqlookupd.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -153,7 +153,7 @@ If release name contains chart name it will be used as a full name.
 {{- if .Values.global.nsqlookupd.fullnameOverride }}
 {{- .Values.global.nsqlookupd.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.global.nsqlookupd.nameOverride }}
+{{- $name := default "nsqlookupd" .Values.global.nsqlookupd.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
