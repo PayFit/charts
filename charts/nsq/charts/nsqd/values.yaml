@@ -81,3 +81,10 @@ affinity: {}
 persistence:
   enabled: true
   mountPath: "/data"
+
+metrics:
+  enabled: false
+  image:
+    repository: emaincourt/nsq_exporter
+    pullPolicy: IfNotPresent
+    tag: latest

@@ -28,7 +28,15 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        {{- if .Values.metrics.enabled }}
+        - name: exporter
+          image: {{ printf "%s:%s" .Values.metrics.image.repository .Values.metrics.image.tag }}
+          imagePullPolicy: {{ .Values.metrics.image.pullPolicy }}
+          ports:
+            - containerPort: 9117
+              protocol: TCP
+        {{- end }}
+        - name: nsq
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -77,7 +85,6 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-
       volumes:
         - name: config
           configMap:

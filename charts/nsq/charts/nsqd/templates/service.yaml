@@ -14,6 +14,12 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   ports:
+    {{- if .Values.metrics.enabled }}
+    - name: metrics
+      port: 9117
+      targetPort: 9117
+      protocol: TCP
+    {{- end }}
     - name: nsqd-tcp
       port: 4150
       targetPort: 4150
