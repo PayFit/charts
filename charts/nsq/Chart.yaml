@@ -10,4 +10,8 @@ keywords:
 maintainers:
   - name: PayFit
     email: squad-sre@payfit.com
+dependencies:
+  - name: nsqd
+  - name: nsqlookupd
+  - name: nsqadmin
 icon: https://images.prismic.io/payfit%2F9cf6e86c-0aa1-4b45-ad8f-8c8ef48f12c7_payfit-p-logo.svg
