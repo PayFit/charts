@@ -78,8 +78,12 @@ tolerations: []
 
 affinity: {}
 
+args: []
+
 persistence:
   enabled: true
+  accessModes:
+   - ReadWriteOnce
   mountPath: "/data"
   size: 1G
 

@@ -5,9 +5,9 @@ metadata:
   labels:
     {{- include "nsqlookupd.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
   # So we can access each individual node of the statefulset
   clusterIP: None
+  publishNotReadyAddresses: true
   ports:
     - port: 4161
       targetPort: http
