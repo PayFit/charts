@@ -81,6 +81,7 @@ affinity: {}
 persistence:
   enabled: true
   mountPath: "/data"
+  size: 1G
 
 metrics:
   enabled: false
