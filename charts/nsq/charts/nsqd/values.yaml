@@ -38,6 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
+  externalTrafficPolicy: null
   port: 80
 
 ingress:

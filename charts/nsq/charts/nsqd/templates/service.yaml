@@ -11,8 +11,8 @@ metadata:
   {{- end }}
 {{- end }}
 spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Local
+  type: {{ .Values.service.type }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
   ports:
     {{- if .Values.metrics.enabled }}
     - name: metrics
