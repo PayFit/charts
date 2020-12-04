@@ -87,4 +87,4 @@ metrics:
   image:
     repository: emaincourt/nsq_exporter
     pullPolicy: IfNotPresent
-    tag: latest
+    tag: 1.1.0

@@ -12,6 +12,12 @@ maintainers:
     email: squad-sre@payfit.com
 dependencies:
   - name: nsqd
+    version: 0.1.0
+    repository: ''
   - name: nsqlookupd
+    version: 0.1.0
+    repository: ''
   - name: nsqadmin
+    version: 0.1.0
+    repository: ''
 icon: https://images.prismic.io/payfit%2F9cf6e86c-0aa1-4b45-ad8f-8c8ef48f12c7_payfit-p-logo.svg
