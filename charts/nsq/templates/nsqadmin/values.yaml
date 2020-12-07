@@ -1,4 +1,4 @@
-# Default values for nsqd.
+# Default Values.nsqadmin for nsqadmin.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -23,6 +23,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+priorityClassName: ""
+
 podAnnotations: {}
 
 podSecurityContext: {}
@@ -38,8 +40,6 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  externalTrafficPolicy: null
-  port: 80
 
 ingress:
   enabled: false
@@ -78,39 +78,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-args: []
-
-persistence:
-  enabled: true
-  accessModes:
-   - ReadWriteOnce
-  mountPath: "/data"
-  size: 1G
-
-metrics:
-  enabled: false
-
-  image:
-    repository: emaincourt/nsq_exporter
-    pullPolicy: IfNotPresent
-    tag: 1.1.0
-
-  # Enable this if you're using https://github.com/coreos/prometheus-operator
-  serviceMonitor:
-    enabled: false
-    ## Specify a namespace if needed
-    # namespace: monitoring
-    # fallback to the prometheus default unless specified
-    # interval: 10s
-
-  ## Custom PrometheusRule to be defined
-  ## The value is evaluated as a template, so, for example, the value can depend on .Release or .Chart
-  ## ref: https://github.com/coreos/prometheus-operator#customresourcedefinitions
-  prometheusRule:
-    enabled: false
-    additionalLabels: {}
-    namespace: ''
-    ## Prometheus rules
-    ## Make sure to constraint the rules to the current service.
-    rules: []

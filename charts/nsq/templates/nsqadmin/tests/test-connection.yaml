@@ -11,5 +11,9 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
+<<<<<<< HEAD:charts/nsq/charts/nsqadmin/templates/tests/test-connection.yaml
       args: ['{{ include "nsqadmin.fullname" . }}:4171']
+=======
+      args: ['{{ include "nsqadmin.fullname" . }}:{{ .Values.nsqadmin.service.port }}']
+>>>>>>> Moved subcharts to template subdirectory:charts/nsq/templates/nsqadmin/tests/test-connection.yaml
   restartPolicy: Never

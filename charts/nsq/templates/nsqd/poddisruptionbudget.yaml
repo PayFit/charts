@@ -1,4 +1,4 @@
-{{- if .Values.podDisruptionBudget }}
+{{- if .Values.nsqd.podDisruptionBudget }}
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
@@ -9,6 +9,6 @@ spec:
   selector:
     matchLabels:
       {{- include "nsqd.selectorLabels" . | nindent 6 }}
-{{ toYaml .Values.podDisruptionBudget | trim | indent 2 }}
+{{ toYaml .Values.nsqd.podDisruptionBudget | trim | indent 2 }}
   minAvailable: 1
 {{- end -}}
