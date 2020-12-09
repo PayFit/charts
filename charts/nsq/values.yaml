@@ -14,10 +14,6 @@ nsqadmin:
     pullPolicy: IfNotPresent
     tag: ""
   imagePullSecrets: []
-  nameOverride: ""
-  fullnameOverride: ""
-  serviceAccount:
-    create: true
   annotations: {}
   priorityClassName: ""
   podAnnotations: {}
