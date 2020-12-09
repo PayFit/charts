@@ -31,7 +31,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.nsqlookupd.securityContext | nindent 12 }}
-          image: "{{ .Values.nsqlookupd.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.nsqlookupd.image.repository }}:{{ .Values.nsqlookupd.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.nsqlookupd.image.pullPolicy }}
           env:
             - name: POD_IP

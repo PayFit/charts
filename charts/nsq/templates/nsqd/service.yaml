@@ -11,8 +11,8 @@ metadata:
   {{- end }}
 {{- end }}
 spec:
-  type: {{ .Values.service.type }}
-  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  type: {{ .Values.nsqd.service.type }}
+  externalTrafficPolicy: {{ .Values.nsqd.service.externalTrafficPolicy }}
   ports:
     {{- if .Values.nsqd.metrics.enabled }}
     - name: metrics
