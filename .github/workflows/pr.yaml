@@ -50,7 +50,7 @@ jobs:
           do
               echo "Checking ${DIR} documentation..."
               chart-doc-gen -t=./readme.tpl -d=${DIR}/doc.yaml -v=${DIR}/values.yaml >${DIR}/README.md
-              if !(git diff --exit-code HEAD >/dev/null); then
+              if !(git diff --exit-code HEAD); then
                   echo -e "\033[0;31m ❌ Generated documentation is out of date in ${DIR}, run make gen"; exit 1;
               fi
               echo -e "\033[0;32m ✅ ${DIR} is 👌🏽\n"
