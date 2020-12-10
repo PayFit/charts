@@ -36,10 +36,12 @@ securityContext: {}
   # runAsUser: 1000
 
 resources:
-  limits:
+  # Resources to limit to the pods
+  limits: # +doc-gen:break
     cpu: 100m
     memory: 64Mi
-  requests:
+  # Resources to request for the pods
+  requests: # +doc-gen:break
     cpu: 100m
     memory: 64Mi
 
