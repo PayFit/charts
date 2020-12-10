@@ -1,0 +1,16 @@
+project:
+  name: NSQ by PayFit
+  shortName: NSQ
+  url: https://github.com/PayFit/charts
+  description: Deploy NSQ with a Helm chart
+  app: NSQ
+repository:
+  url: https://payfit.github.io/charts/
+  name: nsq
+chart:
+  name: nsq
+  version: 0.1.0
+  values: "-- generate from values file --"
+  valuesExample: "-- generate from values file --"
+prerequisites:
+- "None"

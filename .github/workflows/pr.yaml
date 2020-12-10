@@ -35,3 +35,23 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
       - name: Run chart-testing (install)
         run: ct install --target-branch main
+  check-doc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install chart-doc-gen
+        run: |
+          sudo curl -sSLo /usr/local/bin/chart-doc-gen https://github.com/kubepack/chart-doc-gen/releases/download/v0.3.0/chart-doc-gen-linux-amd64
+          sudo chmod +x /usr/local/bin/chart-doc-gen
+      - name: Check Doc Updates
+        run: |
+          for DIR in `find ./charts -type d -mindepth 1 -maxdepth 1 `
+          do
+              echo "Checking ${DIR} documentation..."
+              chart-doc-gen -t=./readme.tpl -d=${DIR}/doc.yaml -v=${DIR}/values.yaml >${DIR}/README.md
+              if !(git diff --exit-code HEAD >/dev/null); then
+                  echo -e "\033[0;31m ❌ Generated documentation is out of date in ${DIR}, run make gen"; exit 1;
+              fi
+              echo -e "\033[0;32m ✅ ${DIR} is 👌🏽\n"
+          done

@@ -1,0 +1,16 @@
+project:
+  name: Registry Creds
+  shortName: registry-creds
+  url: https://github.com/PayFit/charts
+  description: Deploy registry-creds by @alexellis with a Helm chart
+  app: registry-creds
+repository:
+  url: https://payfit.github.io/charts/
+  name: registry-creds
+chart:
+  name: registry-creds
+  version: 0.1.0
+  values: "-- generate from values file --"
+  valuesExample: "-- generate from values file --"
+prerequisites:
+- "None"
