@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "nsqlookupd.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "nsqlookupd.fullname" . }}:4161/ping']
   restartPolicy: Never

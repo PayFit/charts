@@ -10,7 +10,8 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-args: []
+args:
+  - --broadcast-address=$(POD_IP)
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,8 +40,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
-  port: 80
+  annotations: {}
 
 ingress:
   enabled: false

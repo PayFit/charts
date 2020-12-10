@@ -40,9 +40,6 @@ spec:
             - /nsqadmin
           args:
             {{- toYaml .Values.args | nindent 12 }}
-          volumeMounts:
-            - name: config
-              mountPath: /etc/nsq
           ports:
             - name: http
               containerPort: 4171
@@ -57,10 +54,6 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      volumes:
-        - name: config
-          configMap:
-            name: nsq
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

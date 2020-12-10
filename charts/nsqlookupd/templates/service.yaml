@@ -9,13 +9,13 @@ spec:
   # So we can access each individual node of the statefulset
   clusterIP: None
   ports:
-    - port: 4161
-      targetPort: http
+    - name: nsqd-tcp
+      port: 4160
+      targetPort: 4160
       protocol: TCP
-      name: http
-    - port: 4160
-      targetPort: tcp
+    - name: nsqd-http
+      port: 4161
+      targetPort: 4161
       protocol: TCP
-      name: tcp
   selector:
     {{- include "nsqlookupd.selectorLabels" . | nindent 4 }}

@@ -39,8 +39,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
-  port: 80
+  annotations: {}
 
 ingress:
   enabled: false
@@ -83,6 +82,8 @@ affinity: {}
 persistence:
   enabled: true
   mountPath: "/data"
+  accessModes:
+    - "ReadWriteOnce"
 
 metrics:
   enabled: false

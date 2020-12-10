@@ -42,7 +42,6 @@ spec:
             - /nsqlookupd
           args:
             {{- toYaml .Values.args | nindent 12 }}
-            - --broadcast-address=$(POD_IP)
           ports:
             - name: tcp
               containerPort: 4160
