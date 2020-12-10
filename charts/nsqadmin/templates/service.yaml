@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nsqadmin.fullname" . }}
+  labels:
+    {{- include "nsqadmin.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 4171
+      targetPort: http
+      protocol: TCP
+  selector:
+    {{- include "nsqadmin.selectorLabels" . | nindent 4 }}
