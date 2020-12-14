@@ -5,41 +5,43 @@ metadata:
   labels:
     {{- include "nsqadmin.labels" . | nindent 4 }}
 spec:
-{{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+{{- if not .Values.nsqadmin.autoscaling.enabled }}
+  replicas: {{ .Values.nsqadmin.replicaCount }}
 {{- end }}
   selector:
     matchLabels:
       {{- include "nsqadmin.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-    {{- with .Values.podAnnotations }}
+    {{- with .Values.nsqadmin.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
         {{- include "nsqadmin.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.nsqadmin.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-{{- if .Values.priorityClassName }}
-      priorityClassName: {{ .Values.priorityClassName | quote }}
+{{- if .Values.nsqadmin.priorityClassName }}
+      priorityClassName: {{ .Values.nsqadmin.priorityClassName | quote }}
 {{- end }}
       serviceAccountName: {{ include "nsqadmin.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.nsqadmin.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+            {{- toYaml .Values.nsqadmin.securityContext | nindent 12 }}
+          image: "{{ .Values.nsqadmin.image.repository }}:{{ .Values.nsqadmin.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.nsqadmin.image.pullPolicy }}
           command:
             - /nsqadmin
           args:
-            - --config=/etc/nsq/nsq-admin.cfg
+            {{  range .Values.nsqadmin.args }}
+              - {{ . }}
+            {{ end }}
           volumeMounts:
             - name: config
               mountPath: /etc/nsq
@@ -56,20 +58,20 @@ spec:
               path: /
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.nsqadmin.resources | nindent 12 }}
       volumes:
         - name: config
           configMap:
             name: nsq
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.nsqadmin.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.nsqadmin.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.nsqadmin.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

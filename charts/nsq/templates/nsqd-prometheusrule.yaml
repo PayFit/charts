@@ -1,20 +1,20 @@
-{{- if and .Values.metrics.enabled .Values.metrics.prometheusRule.enabled }}
+{{- if and .Values.nsqd.metrics.enabled .Values.nsqd.metrics.prometheusRule.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: {{ template "nsqd.fullname" . }}
-  {{- if .Values.metrics.prometheusRule.namespace }}
-  namespace: {{ .Values.metrics.prometheusRule.namespace }}
+  {{- if .Values.nsqd.metrics.prometheusRule.namespace }}
+  namespace: {{ .Values.nsqd.metrics.prometheusRule.namespace }}
   {{- else }}
   namespace: {{ .Release.Namespace | quote }}
   {{- end }}
   labels:
     {{- include "nsqd.labels" . | nindent 4 }}
-{{- with .Values.metrics.prometheusRule.additionalLabels }}
+{{- with .Values.nsqd.metrics.prometheusRule.additionalLabels }}
 {{- toYaml . | nindent 4 }}
 {{- end }}
 spec:
-{{- with .Values.metrics.prometheusRule.rules }}
+{{- with .Values.nsqd.metrics.prometheusRule.rules }}
   groups:
     - name: {{ template "nsqd.name" $ }}
       rules: {{- tpl (toYaml .) $ | nindent 8 }}
