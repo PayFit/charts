@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "nsqlookupd.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.nsqlookupd.replicaCount }}
   serviceName: {{ include "nsqlookupd.fullname" . }}
   podManagementPolicy: Parallel
   selector:
@@ -13,26 +13,26 @@ spec:
       {{- include "nsqlookupd.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-    {{- with .Values.podAnnotations }}
+    {{- with .Values.nsqlookupd.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
         {{- include "nsqlookupd.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.nsqlookupd.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "nsqlookupd.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.nsqlookupd.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+            {{- toYaml .Values.nsqlookupd.securityContext | nindent 12 }}
+          image: "{{ .Values.nsqlookupd.image.repository }}:{{ .Values.nsqlookupd.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.nsqlookupd.image.pullPolicy }}
           env:
             - name: POD_IP
               valueFrom:
@@ -41,7 +41,9 @@ spec:
           command:
             - /nsqlookupd
           args:
-            - --broadcast-address=$(POD_IP)
+            {{  range .Values.nsqlookupd.nsqlookupd }}
+              - {{ . }}
+            {{ end }}
           ports:
             - name: tcp
               containerPort: 4160
@@ -63,16 +65,16 @@ spec:
             initialDelaySeconds: 10
             timeoutSeconds: 5
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.nsqlookupd.resources | nindent 12 }}
+      {{- with .Values.nsqlookupd.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.nsqlookupd.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.nsqlookupd.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

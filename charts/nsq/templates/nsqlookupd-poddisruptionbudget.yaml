@@ -1,4 +1,4 @@
-{{- if .Values.podDisruptionBudget }}
+{{- if .Values.nsqlookupd.podDisruptionBudget }}
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
@@ -9,5 +9,5 @@ spec:
   selector:
     matchLabels:
       {{- include "nsqlookupd.selectorLabels" . | nindent 6 }}
-{{ toYaml .Values.podDisruptionBudget | trim | indent 2 }}
+{{ toYaml .Values.nsqlookupd.podDisruptionBudget | trim | indent 2 }}
 {{- end -}}
