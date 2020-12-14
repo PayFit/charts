@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nsq
+data:
+  {{- /*
+    Here we first loop over all replicas minus the last to set the `,`
+    at the end of line and then set the last replica manually.
+    Loop is not necessary if there is only one replica since we will
+    be using only the last replica (which is also the first).
+  */}}
+  nsq-admin.cfg: |
+    nsqlookupd_http_addresses = [
+{{- if gt (.Values.nsqlookupd.replicaCount | int) 1 }}
+    {{- range (until ((sub .Values.nsqlookupd.replicaCount 1 ) | int)) }}
+      {{- $namespace := $.Release.Namespace }}
+      {{- $fullname := include "nsqlookupd.fullname" $ }}
+      "{{ $fullname }}-{{ . | toString }}.{{ $fullname }}.{{ $namespace }}:4161",
+    {{- end }}
+{{- end }}
+      "{{ include "nsqlookupd.fullname" . }}-{{ sub (.Values.nsqlookupd.replicaCount | int) 1 }}.{{- include "nsqlookupd.fullname" . }}.{{ .Release.Namespace }}:4161"
+    ]
+  nsqd.cfg: |-
+    nsqlookupd_tcp_addresses = [
+{{- if gt (.Values.nsqlookupd.replicaCount | int) 1 }}
+    {{- range (until ((sub .Values.nsqlookupd.replicaCount 1 ) | int)) }}
+      {{- $namespace := $.Release.Namespace }}
+      {{- $fullname := include "nsqlookupd.fullname" $ }}
+      "{{ $fullname }}-{{ . | toString }}.{{ $fullname }}.{{ $namespace }}:4160",
+    {{- end }}
+{{- end }}
+      "{{ include "nsqlookupd.fullname" . }}-{{ sub (.Values.nsqlookupd.replicaCount | int) 1 }}.{{- include "nsqlookupd.fullname" . }}.{{ .Release.Namespace }}:4160"
+    ]

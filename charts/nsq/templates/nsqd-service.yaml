@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nsqd.fullname" . }}
+  labels:
+    {{- include "nsqd.labels" . | nindent 4 }}
+{{- with .Values.nsqd.service.annotations }}
+  annotations:
+  {{- range $key, $value := . }}
+    {{ $key }}: {{ $value }}
+  {{- end }}
+{{- end }}
+spec:
+  type: {{ .Values.nsqd.service.type }}
+  externalTrafficPolicy: {{ .Values.nsqd.service.externalTrafficPolicy }}
+  ports:
+    {{- if .Values.nsqd.metrics.enabled }}
+    - name: metrics
+      port: 9117
+      targetPort: 9117
+      protocol: TCP
+    {{- end }}
+    - name: nsqd-tcp
+      port: 4150
+      targetPort: 4150
+      protocol: TCP
+    - name: nsqd-http
+      port: 4151
+      protocol: TCP
+      targetPort: 4151
+  selector:
+    {{- include "nsqd.selectorLabels" . | nindent 4 }}

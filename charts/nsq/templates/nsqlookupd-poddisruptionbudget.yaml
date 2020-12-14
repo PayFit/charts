@@ -1,0 +1,13 @@
+{{- if .Values.nsqlookupd.podDisruptionBudget }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "nsqlookupd.fullname" . }}
+  labels:
+    {{- include "nsqlookupd.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "nsqlookupd.selectorLabels" . | nindent 6 }}
+{{ toYaml .Values.nsqlookupd.podDisruptionBudget | trim | indent 2 }}
+{{- end -}}

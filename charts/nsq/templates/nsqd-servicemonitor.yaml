@@ -1,0 +1,25 @@
+{{- if and (.Values.nsqd.metrics.enabled) (.Values.nsqd.metrics.serviceMonitor.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "nsqd.fullname" . }}
+  {{- if .Values.nsqd.metrics.serviceMonitor.namespace }}
+  namespace: {{ .Values.nsqd.metrics.serviceMonitor.namespace }}
+  {{- else }}
+  namespace: {{ .Release.Namespace | quote }}
+  {{- end }}
+  labels:
+    {{- include "nsqd.labels" . | nindent 4 }}
+spec:
+  endpoints:
+    - port: metrics
+      {{- if .Values.nsqd.metrics.serviceMonitor.interval }}
+      interval: {{ .Values.nsqd.metrics.serviceMonitor.interval }}
+      {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nsqd.selectorLabels" . | nindent 6 }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+{{- end -}}

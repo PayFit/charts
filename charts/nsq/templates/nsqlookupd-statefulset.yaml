@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "nsqlookupd.fullname" . }}
+  labels:
+    {{- include "nsqlookupd.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.nsqlookupd.replicaCount }}
+  serviceName: {{ include "nsqlookupd.fullname" . }}
+  podManagementPolicy: Parallel
+  selector:
+    matchLabels:
+      {{- include "nsqlookupd.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.nsqlookupd.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "nsqlookupd.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.nsqlookupd.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nsqlookupd.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.nsqlookupd.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.nsqlookupd.securityContext | nindent 12 }}
+          image: "{{ .Values.nsqlookupd.image.repository }}:{{ .Values.nsqlookupd.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.nsqlookupd.image.pullPolicy }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          command:
+            - /nsqlookupd
+          args:
+            {{  range .Values.nsqlookupd.nsqlookupd }}
+              - {{ . }}
+            {{ end }}
+          ports:
+            - name: tcp
+              containerPort: 4160
+              protocol: TCP
+            - name: http
+              containerPort: 4161
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.nsqlookupd.resources | nindent 12 }}
+      {{- with .Values.nsqlookupd.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nsqlookupd.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nsqlookupd.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "nsqd.fullname" . }}
+  labels:
+    {{- include "nsqd.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "nsqd.fullname" . }}
+  replicas: {{ .Values.nsqd.replicaCount }}
+  podManagementPolicy: Parallel
+  selector:
+    matchLabels:
+      {{- include "nsqd.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.nsqd.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nsqd.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.nsqd.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nsqd.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.nsqd.podSecurityContext | nindent 8 }}
+      containers:
+        {{- if .Values.nsqd.metrics.enabled }}
+        - name: exporter
+          image: {{ printf "%s:%s" .Values.nsqd.metrics.image.repository .Values.nsqd.metrics.image.tag }}
+          imagePullPolicy: {{ .Values.nsqd.metrics.image.pullPolicy }}
+          ports:
+            - containerPort: 9117
+              protocol: TCP
+        {{- end }}
+        - name: nsq
+          securityContext:
+            {{- toYaml .Values.nsqd.securityContext | nindent 12 }}
+          image: "{{ .Values.nsqd.image.repository }}:{{ .Values.nsqd.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.nsqd.image.pullPolicy }}
+          args:
+            {{  range .Values.nsqd.args }}
+              - {{ . }}
+            {{ end }}
+          command:
+            - /nsqd
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          ports:
+            - containerPort: 4150
+              name: tcp
+            - containerPort: 4151
+              name: http
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+          resources:
+            {{- toYaml .Values.nsqd.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nsq
+            {{- if .Values.nsqd.persistence.enabled }}
+            - name: data
+              mountPath: {{ .Values.nsqd.persistence.mountPath }}
+              subPath: {{ .Values.nsqd.persistence.subPath }}
+            {{- end }}
+      {{- with .Values.nsqd.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nsqd.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nsqd.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: config
+          configMap:
+            name: nsq
+{{- if and .Values.nsqd.persistence.enabled .Values.nsqd.persistence.existingClaim }}
+        - name: data
+          persistentVolumeClaim:
+{{- with .Values.nsqd.persistence.existingClaim }}
+            claimName: {{ tpl . $ }}
+{{- end }}
+{{- else if not .Values.nsqd.persistence.enabled }}
+        - name: data
+          emptyDir: {}
+{{- else if and .Values.nsqd.persistence.enabled (not .Values.nsqd.persistence.existingClaim) }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      {{- with .Values.nsqd.persistence.annotations }}
+        annotations:
+        {{- range $key, $value := . }}
+          {{ $key }}: {{ $value }}
+        {{- end }}
+      {{- end }}
+      spec:
+        accessModes:
+        {{- range .Values.nsqd.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        storageClassName: {{ .Values.nsqd.persistence.storageClassName }}
+        resources:
+          requests:
+            storage: {{ .Values.nsqd.persistence.size | quote }}
+{{- end }}

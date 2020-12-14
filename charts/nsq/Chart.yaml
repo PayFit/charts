@@ -1,0 +1,13 @@
+apiVersion: v2
+name: nsq
+description: NSQ Helm chart
+type: application
+version: 0.1.0
+appVersion: v1.1.0
+keywords:
+  - "NSQ"
+  - "NSQ Admin"
+maintainers:
+  - name: PayFit
+    email: squad-sre@payfit.com
+icon: https://images.prismic.io/payfit%2F9cf6e86c-0aa1-4b45-ad8f-8c8ef48f12c7_payfit-p-logo.svg
