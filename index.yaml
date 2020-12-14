@@ -1,5 +1,23 @@
 apiVersion: v1
 entries:
+  nsq:
+  - apiVersion: v2
+    appVersion: v1.1.0
+    created: "2020-12-14T11:44:32.727993428Z"
+    description: NSQ Helm chart
+    digest: 9f4da12ba020ced7b9a52c07e0b2d01e78646e6df4a357f4d95d466faff87753
+    icon: https://images.prismic.io/payfit%2F9cf6e86c-0aa1-4b45-ad8f-8c8ef48f12c7_payfit-p-logo.svg
+    keywords:
+    - NSQ
+    - NSQ Admin
+    maintainers:
+    - email: squad-sre@payfit.com
+      name: PayFit
+    name: nsq
+    type: application
+    urls:
+    - https://github.com/PayFit/charts/releases/download/nsq-0.1.0/nsq-0.1.0.tgz
+    version: 0.1.0
   registry-creds:
   - apiVersion: v2
     appVersion: 0.2.5
