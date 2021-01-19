@@ -27,17 +27,6 @@ spec:
       serviceAccountName: {{ include "op-scim-bridge.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      initContainers:
-        - name: {{ .Chart.Name }}-scimuser-home-permissions
-          image: alpine:3.12
-          command:
-            - "/bin/sh"
-            - "-c"
-          args:
-            - "mkdir -p {{ .Values.scim.userHome }} && chown -R {{ .Values.scim.userID }} {{ .Values.scim.userHome }}"
-          volumeMounts:
-            - mountPath: "/home"
-              name: {{ .Chart.Name }}-scimsession
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -48,7 +37,7 @@ spec:
             - "/op-scim/op-scim"
           args:
             - "--redis-host={{ .Release.Name }}-redis-master"
-            - "--session={{ .Values.scim.userHome }}/{{ .Values.scim.sessionFile }}"
+            - "--session=/secret/scimsession"
             - "--port=8080"
           ports:
             - name: http-app
@@ -57,8 +46,8 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: {{ .Chart.Name }}-scimsession
-              mountPath: "/home"
+            - name: scimsession
+              mountPath: "/secret"
               readOnly: false
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -73,6 +62,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: {{ .Chart.Name }}-scimsession
-          persistentVolumeClaim:
-            claimName: {{ .Chart.Name }}-scimsession
+        - name: scimsession
+          secret:
+            secretName: {{ include "op-scim-bridge.fullname" . }}

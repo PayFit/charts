@@ -1,12 +1,6 @@
 scim:
-  # -- Default user ID for SCIM application
-  userID: 999
-  # -- User name for SCIM application
-  userName: scimuser
-  # -- User home directoy for SCIM application
-  userHome: /home/scimuser
-  # -- Session file for SCIM application
-  sessionFile: scimsession
+  # -- Secret
+  secret:
 
   # -- Replica count for SCIM deployment
 replicaCount: 1
@@ -88,17 +82,9 @@ tolerations: []
 # -- Pod affinity for SCIM pods
 affinity: {}
 
-# -- Storage class for the SCIM PVC
-storageClassName: do-block-storage
-
 # -- Redis configuration, check [the upstream configuration](https://github.com/bitnami/charts/blob/master/bitnami/redis)
 redis:
   enabled: true
-  image:
-    registry: docker.io
-    repository: bitnami/redis
-    tag: 6.0.9-debian-10-r13
-    pullPolicy: IfNotPresent
   cluster:
     enabled: false
   usePassword: false
