@@ -1,0 +1,21 @@
+apiVersion: v2
+name: op-scim-bridge
+version: 1.6.1
+description: The 1Password SCIM bridge
+keywords:
+  - "azure active directory"
+  - "okta"
+  - "provisioning"
+  - "SCIM"
+  - "1Password"
+home: https://support.1password.com/scim
+maintainers:
+  - name: 1Password Platform Integrations Team
+    email: support+business@1password.com
+icon: https://1password.com/img/logo-v1.svg
+appVersion: v1.6.0
+dependencies:
+  - name: redis
+    version: 12.0.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled

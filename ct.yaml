@@ -2,3 +2,5 @@ remote: origin
 chart-dirs:
   - charts
 helm-extra-args: --timeout 10m
+chart-repos:
+  - bitnami=https://charts.bitnami.com/bitnami
