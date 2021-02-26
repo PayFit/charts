@@ -1,0 +1,25 @@
+{{- if .Values.podMonitor.create }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ include "registry-creds.fullname" . }}
+  {{- if .Values.podMonitor.namespace }}
+  namespace: {{ .Values.podMonitor.namespace }}
+  {{- else }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- toYaml .Values.podMonitor.labels | nindent 4 }}
+spec:
+  jobLabel: {{ include "registry-creds.fullname" . }}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  podMetricsEndpoints:
+    - interval: {{ .Values.podMonitor.interval }}
+      port: metrics
+  sampleLimit: {{ .Values.podMonitor.sampleLimit }}
+  selector:
+    matchLabels:
+      {{- include "registry-creds.selectorLabels" . | nindent 6 }}
+{{- end }}
