@@ -72,6 +72,20 @@ entries:
   proxy-redis-ha:
   - apiVersion: v2
     appVersion: 4.12.9
+    created: "2021-03-03T20:48:07.236033425Z"
+    dependencies:
+    - name: redis-ha
+      repository: https://dandydeveloper.github.io/charts
+      version: 4.12.9
+    description: A wrapper chart around redis-ha to embed prometheus rules
+    digest: b7b703b41d7c422d546241cd08f645aef3f22fabe3a7874feb6fe53292268f13
+    name: proxy-redis-ha
+    type: application
+    urls:
+    - https://github.com/PayFit/charts/releases/download/proxy-redis-ha-0.1.1/proxy-redis-ha-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 4.12.9
     created: "2021-03-03T20:08:21.48809375Z"
     dependencies:
     - name: redis-ha
