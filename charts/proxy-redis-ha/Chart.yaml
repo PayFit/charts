@@ -2,7 +2,7 @@ apiVersion: v2
 name: proxy-redis-ha
 description: A wrapper chart around redis-ha to embed prometheus rules
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: 4.12.9
 dependencies:
 - name: redis-ha

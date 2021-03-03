@@ -4,3 +4,4 @@ chart-dirs:
 helm-extra-args: --timeout 10m
 chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
+  - dandydev=https://dandydeveloper.github.io/charts
