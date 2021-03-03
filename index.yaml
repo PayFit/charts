@@ -69,6 +69,21 @@ entries:
     urls:
     - https://github.com/PayFit/charts/releases/download/op-scim-bridge-1.6.1/op-scim-bridge-1.6.1.tgz
     version: 1.6.1
+  proxy-redis-ha:
+  - apiVersion: v2
+    appVersion: 4.12.9
+    created: "2021-03-03T20:08:21.48809375Z"
+    dependencies:
+    - name: redis-ha
+      repository: https://dandydeveloper.github.io/charts
+      version: 4.12.9
+    description: A wrapper chart around redis-ha to embed prometheus rules
+    digest: 98488b500442300e711cf7e43f16497e7d7e7b431976fd27b0417a4a6a5ee6dc
+    name: proxy-redis-ha
+    type: application
+    urls:
+    - https://github.com/PayFit/charts/releases/download/proxy-redis-ha-0.1.0/proxy-redis-ha-0.1.0.tgz
+    version: 0.1.0
   registry-creds:
   - apiVersion: v2
     appVersion: 0.2.5
