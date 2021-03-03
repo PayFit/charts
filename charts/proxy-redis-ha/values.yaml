@@ -1,0 +1,23 @@
+## Custom PrometheusRule to be defined
+## The value is evaluated as a template, so, for example, the value can depend on .Release or .Chart
+## ref: https://github.com/coreos/prometheus-operator#customresourcedefinitions
+prometheusRule:
+  # prometheusRule.enabled -- If true, creates a Prometheus Operator PrometheusRule.
+  enabled: true
+  # prometheusRule.additionalLabels -- Additional labels to be set in metadata.
+  additionalLabels: {}
+  # prometheusRule.namespace -- Namespace which Prometheus is running in.
+  namespace: ''
+  # prometheusRule.interval -- How often rules in the group are evaluated (falls back to `global.evaluation_interval` if not set).
+  interval: null
+  # prometheusRule.rules -- Rules spec template (see https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#rule).
+  rules:
+    - alert: RedisPodDown
+      expr: |
+        redis_up{job="{{ include "redis-ha-wrapper.call-nested" (list . "redis-ha" "redis-ha.fullname") }}"} == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        description: Redis pod {{ "{{ $labels.pod }}" }} is down
+        summary: Redis pod {{ "{{ $labels.pod }}" }} is down
