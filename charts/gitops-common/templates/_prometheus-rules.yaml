@@ -1,0 +1,18 @@
+{{- define "gitops-common.prometheus-rule" -}}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ . }}
+  namespace: monitoring
+spec:
+  groups:
+    - name: argocd
+      rules:
+        - alert: ArgoAppMissing
+          expr: absent(argocd_app_info{name="{{ . }}"}) == 1
+          for: 15m
+          labels:
+            severity: error
+          annotations:
+            summary: ArgoCD application {{`{{ $labels.name }}`}} is missing
+{{- end }}
