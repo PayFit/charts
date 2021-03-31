@@ -1,0 +1,30 @@
+{{- define "gitops-common.alertmanager-pagerduty-config" -}}
+routing_key: '{{ . }}'
+send_resolved: true
+description: '{{`{{ template "pagerduty.payfit.description" . }}`}}'
+details:
+    cluster: '{{`{{ template "utils.payfit.cluster-name" . }}`}}'
+    alertname: '{{`{{ .CommonLabels.alertname }}`}}'
+    severity: '{{`{{ .CommonLabels.severity }}`}}'
+    job: '{{`{{ .CommonLabels.job }}`}}'
+    namespace: '{{`{{ .CommonLabels.namespace }}`}}'
+    description: '{{`{{ .CommonAnnotations.description }}`}}'
+    summary: '{{`{{ .CommonAnnotations.summary }}`}}'
+    message: '{{`{{ .CommonAnnotations.message }}`}}'
+    runbook: '{{`{{ .CommonAnnotations.runbook_url }}`}}'
+    firing: null
+    resolved: null
+    num_firing: null
+    num_resolved: null
+links:
+-   text: Runbook
+    href: '{{`{{ template "url.payfit.runbook" . }}`}}'
+-   text: Query
+    href: '{{`{{ template "url.payfit.query" . }}`}}'
+-   text: Dashboard
+    href: '{{`{{ template "url.payfit.dashboard" . }}`}}'
+-   text: Silence
+    href: '{{`{{ template "url.payfit.silence" . }}`}}'
+-   text: '{{`{{ template "slack.payfit.link-text" . }}`}}'
+    href: '{{`{{ template "url.payfit.link" . }}`}}'
+{{- end }}
