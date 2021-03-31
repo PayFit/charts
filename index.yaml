@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   gitops-common:
   - apiVersion: v2
+    created: "2021-03-31T09:25:45.357489217Z"
+    description: GitOps common
+    digest: e79d837fdd5eeccb35b325dae92d92400bd19acde48b722ac3b382adc4f7b706
+    name: gitops-common
+    type: library
+    urls:
+    - https://github.com/PayFit/charts/releases/download/gitops-common-0.1.1/gitops-common-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     created: "2021-03-15T12:08:34.630829331Z"
     description: GitOps common
     digest: 38ef26a9690b1f6e7bb17d5b9b0357c8c7c1c3e2b484adf95f8a230a404e2307
