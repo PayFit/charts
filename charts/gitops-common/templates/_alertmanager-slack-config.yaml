@@ -1,0 +1,25 @@
+{{- define "gitops-common.alertmanager-slack-config" -}}
+channel: '{{ . }}'
+title: '{{`{{ template "slack.payfit.title" . }}`}}'
+color: '{{`{{ template "slack.payfit.color" . }}`}}'
+text: '{{`{{ template "slack.payfit.text" . }}`}}'
+sendResolved: true
+linkNames: true
+titleLink: '{{`{{ template "url.payfit.external" . }}`}}'
+actions:
+- type: button
+  text: 'Runbook :green_book:'
+  url: '{{`{{ template "url.payfit.runbook" . }}`}}'
+- type: button
+  text: 'Query :mag:'
+  url: '{{`{{ template "url.payfit.query" . }}`}}'
+- type: button
+  text: 'Dashboard :bar_chart:'
+  url: '{{`{{ template "url.payfit.dashboard" . }}`}}'
+- type: button
+  text: 'Silence :no_bell:'
+  url: '{{`{{ template "url.payfit.silence" . }}`}}'
+- type: button
+  text: '{{`{{ template "slack.payfit.link-text" . }}`}}'
+  url: '{{`{{ template "url.payfit.link" . }}`}}'
+{{- end }}
