@@ -1,6 +1,8 @@
 remote: origin
 chart-dirs:
   - charts
+excluded-charts:
+  - gitops-common
 helm-extra-args: --timeout 10m
 chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
