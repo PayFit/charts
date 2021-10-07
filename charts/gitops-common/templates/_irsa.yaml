@@ -1,0 +1,37 @@
+{{ define "gitops-common.irsa-volume" }}
+name: {{ . | default "aws-iam-token" | quote }}
+projected:
+  defaultMode: 420
+  sources:
+    - serviceAccountToken:
+        audience: amazonaws.com
+        expirationSeconds: 86400
+        path: token
+{{ end }}
+
+{{ define "gitops-common.irsa-volume-mount" }}
+mountPath: /var/run/secrets/eks.amazonaws.com/serviceaccount
+name: {{ . | default "aws-iam-token" | quote }}
+readOnly: true
+{{ end }}
+
+{{ define "gitops-common.irsa-env-vars" }}
+- name: AWS_ROLE_ARN
+  value: {{ . | quote }}
+- name: AWS_WEB_IDENTITY_TOKEN_FILE
+  value: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
+- name: AWS_DEFAULT_REGION
+  value: eu-west-3
+- name: AWS_REGION
+  value: eu-west-3
+- name: AWS_STS_REGIONAL_ENDPOINTS
+  value: regional
+{{ end }}
+
+{{ define "gitops-common.irsa-env-map" }}
+AWS_ROLE_ARN: {{ . | quote }}
+AWS_WEB_IDENTITY_TOKEN_FILE: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
+AWS_DEFAULT_REGION: eu-west-3
+AWS_REGION: eu-west-3
+AWS_STS_REGIONAL_ENDPOINTS: regional
+{{ end }}
