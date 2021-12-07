@@ -1,0 +1,5 @@
+## It is required by CI/CD tools and processes.
+## @skip exampleValue
+##
+# -- Example value
+exampleValue: common-chart
