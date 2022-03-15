@@ -58,6 +58,36 @@ entries:
   op-scim-bridge:
   - apiVersion: v2
     appVersion: v1.6.0
+    created: "2022-03-15T10:18:12.518753841Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.0.0
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 1.x.x
+    description: The 1Password SCIM bridge
+    digest: 1e8a26e58b95540c824335a7625e12f7637f7e91c56d7304107bd1ae504e0170
+    home: https://support.1password.com/scim
+    icon: https://1password.com/img/logo-v1.svg
+    keywords:
+    - azure active directory
+    - okta
+    - provisioning
+    - SCIM
+    - 1Password
+    maintainers:
+    - email: support+business@1password.com
+      name: 1Password Platform Integrations Team
+    name: op-scim-bridge
+    urls:
+    - https://github.com/PayFit/charts/releases/download/op-scim-bridge-1.6.3/op-scim-bridge-1.6.3.tgz
+    version: 1.6.3
+  - apiVersion: v2
+    appVersion: v1.6.0
     created: "2021-01-19T16:50:21.324728826Z"
     dependencies:
     - condition: redis.enabled
