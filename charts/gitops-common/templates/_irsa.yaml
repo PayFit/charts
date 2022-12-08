@@ -9,6 +9,17 @@ projected:
         path: token
 {{ end }}
 
+{{ define "gitops-common.eks-irsa-volume" }}
+name: {{ . | default "aws-iam-token" | quote }}
+projected:
+  defaultMode: 420
+  sources:
+    - serviceAccountToken:
+        audience: sts.amazonaws.com
+        expirationSeconds: 86400
+        path: token
+{{ end }}
+
 {{ define "gitops-common.irsa-volume-mount" }}
 mountPath: /var/run/secrets/eks.amazonaws.com/serviceaccount
 name: {{ . | default "aws-iam-token" | quote }}
